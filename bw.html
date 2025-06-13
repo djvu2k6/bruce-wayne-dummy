@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bruce Wayne | Gotham's Visionary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=DM+Serif+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-black: #000000;
+            --charcoal: #1a1a1a;
+            --deep-gold: #bfa74f;
+            --silver-gray: #cccccc;
+            --dark-gray: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Serif Display', serif;
+            background-color: var(--primary-black);
+            color: var(--silver-gray);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--deep-gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            mix-blend-mode: difference;
+            opacity: 0;
+        }
+
+        .cursor.active {
+            opacity: 1;
+        }
+
+        .cursor.hover {
+            transform: scale(2);
+            background-color: var(--deep-gold);
+            opacity: 0.3;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--primary-black) 0%, var(--charcoal) 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(191, 167, 79, 0.05) 0%, transparent 50%);
+            animation: shimmer 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes shimmer {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: heroFadeIn 2s ease-out 0.5s forwards;
+        }
+
+        @keyframes heroFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-image {
+            width: 280px;
+            height: 380px;
+            background: linear-gradient(145deg, var(--charcoal), var(--dark-gray));
+            border-radius: 15px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: var(--deep-gold);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9);
+            animation: imageScale 1.5s ease-out 1s forwards;
+        }
+
+        @keyframes imageScale {
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(191, 167, 79, 0.1) 100%);
+        }
+
+        .hero-image::after {
+            content: '🦇';
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, var(--silver-gray), var(--deep-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            animation: titleFade 1.5s ease-out 1.5s forwards;
+        }
+
+        @keyframes titleFade {
+            to { opacity: 1; }
+        }
+
+        .hero .subtitle {
+            font-size: 1.4rem;
+            color: var(--deep-gold);
+            margin-bottom: 3rem;
+            min-height: 2rem;
+            font-style: italic;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--deep-gold);
+            animation: pulse 2s infinite;
+            cursor: pointer;
+            opacity: 0;
+            animation: indicatorFade 1s ease-out 3s forwards, pulse 2s infinite 3s;
+        }
+
+        @keyframes indicatorFade {
+            to { opacity: 1; }
+        }
+
+        .scroll-indicator span {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .scroll-arrow {
+            width: 2px;
+            height: 30px;
+            background: var(--deep-gold);
+            position: relative;
+        }
+
+        .scroll-arrow::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 8px solid var(--deep-gold);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 8rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--deep-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .section-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* About Section */
+        .about {
+            background: var(--charcoal);
+            margin: 0;
+            max-width: 100%;
+            position: relative;
+        }
+
+        .about::before {
+            content: '🦇';
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            font-size: 8rem;
+            opacity: 0.03;
+            pointer-events: none;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--silver-gray);
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+
+        .about-text.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 320px;
+            background: linear-gradient(145deg, var(--dark-gray), var(--primary-black));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--deep-gold);
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-image.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(191, 167, 79, 0.1) 100%);
+        }
+
+        /* Enterprises Section */
+        .enterprises-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .enterprise-card {
+            background: var(--charcoal);
+            padding: 3rem 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--dark-gray);
+            position: relative;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(50px) scale(0.9);
+        }
+
+        .enterprise-card.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .enterprise-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--deep-gold);
+            box-shadow: 0 25px 50px rgba(191, 167, 79, 0.15);
+        }
+
+        .enterprise-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            color: var(--deep-gold);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .enterprise-card p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--silver-gray);
+        }
+
+        /* Quotes Section */
+        .quotes {
+            background: var(--primary-black);
+            text-align: center;
+            position: relative;
+            margin: 0;
+            max-width: 100%;
+        }
+
+        .quotes::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(191, 167, 79, 0.03) 0%, transparent 70%);
+        }
+
+        .quote {
+            font-size: 2.2rem;
+            line-height: 1.4;
+            color: var(--deep-gold);
+            font-style: italic;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .quote.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .quote::before,
+        .quote::after {
+            content: '"';
+            font-size: 3rem;
+            color: var(--silver-gray);
+            opacity: 0.3;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--charcoal);
+            margin: 0;
+            max-width: 100%;
+            text-align: center;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .contact-form.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            color: var(--deep-gold);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--primary-black);
+            border: 2px solid var(--dark-gray);
+            border-radius: 8px;
+            color: var(--silver-gray);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'DM Serif Display', serif;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--deep-gold);
+            box-shadow: 0 0 0 3px rgba(191, 167, 79, 0.1);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--deep-gold), #d4b76a);
+            color: var(--primary-black);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 1.5rem 3rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(191, 167, 79, 0.4);
+        }
+
+        .cta-button:active {
+            transform: translateY(-1px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .enterprises-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quote {
+                font-size: 1.6rem;
+            }
+
+            .section {
+                padding: 4rem 1rem;
+            }
+
+            .hero-image {
+                width: 240px;
+                height: 320px;
+            }
+
+            .cursor {
+                display: none;
+            }
+        }
+
+        /* Loading Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        /* Add this to your CSS */
+        /* filepath: c:\Users\admin\OneDrive\Desktop\web\bw\bw.html */
+        .section.enterprises {
+            margin-bottom: 4rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <div class="hero-image">
+                <img src="bw.jpeg" alt="Bruce Wayne Portrait" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;z-index:1;">
+                <span style="position:relative;z-index:2;"></span>
+            </div>
+            <h1>Bruce Wayne</h1>
+            <div class="subtitle" id="typewriter"></div>
+        </div>
+        <div class="scroll-indicator" onclick="scrollToSection('about')">
+            <span>Scroll</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about" id="about">
+        <div class="section-title">A Life in the Shadows of Gotham</div>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Born into privilege but forged by tragedy, Bruce Wayne emerged from the darkest chapter of his life with an unwavering vision for Gotham's future. After witnessing the loss of his parents in Crime Alley, young Bruce channeled his grief into purpose, transforming Wayne Enterprises into a beacon of innovation and hope.</p>
+                <p>With discipline as his foundation and responsibility as his compass, Bruce has dedicated his life to protecting what matters most. His commitment extends beyond boardrooms and charity galas—it reaches into every shadow where justice is needed.</p>
+            </div>
+            <div class="about-image">
+                <img src="gc.jpg" alt="Gotham Skyline" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;z-index:1;">
+                <span style="position:relative;z-index:2;"></span>
+                <span></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enterprises Section -->
+    <section class="section enterprises" id="enterprises">
+        <div class="section-title">Wayne Enterprises</div>
+        <div class="enterprises-grid">
+            <div class="enterprise-card">
+                <h3>Wayne Tech</h3>
+                <p>Innovating defense and medical solutions that protect and preserve life. Our cutting-edge research division develops technologies that keep Gotham safe while advancing human potential.</p>
+            </div>
+            <div class="enterprise-card">
+                <h3>Wayne Foundation</h3>
+                <p>Empowering the future of Gotham's youth through education, mentorship, and opportunity. We believe every child deserves a chance to rise above their circumstances.</p>
+            </div>
+            <div class="enterprise-card">
+                <h3>Wayne Tower</h3>
+                <p>A symbol of strength above the shadows. Our headquarters stands as a testament to Gotham's resilience and our commitment to the city's bright future.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quotes Section >
+    <section class="section quotes" id="quotes">
+        <div class="quote">A man is defined by what he does when no one is watching.</div>
+        <div class="quote">I wear the mask not to hide who I am, but to create what I must become.</div>
+    </section > 
+
+    <Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="section-title">Discretion. Power. Purpose.</div>
+        <form class="contact-form" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="cta-button">Book Private Consultation</button>
+        </form>
+    </section>
+
+    <script>
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const interactiveElements = document.querySelectorAll('a, button, .enterprise-card, input, textarea, .scroll-indicator');
+
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.classList.add('active');
+        });
+
+        function updateCursor() {
+            cursorX += (mouseX - cursorX) * 0.1;
+            cursorY += (mouseY - cursorY) * 0.1;
+            cursor.style.left = cursorX - 10 + 'px';
+            cursor.style.top = cursorY - 10 + 'px';
+            requestAnimationFrame(updateCursor);
+        }
+        updateCursor();
+
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // Typewriter Effect
+        const typewriterText = "Entrepreneur. Investor. Gotham's Reluctant Savior.";
+        const typewriterElement = document.getElementById('typewriter');
+        let i = 0;
+
+        function typeWriter() {
+            if (i < typewriterText.length) {
+                typewriterElement.innerHTML += typewriterText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 80);
+            }
+        }
+
+        // Start typewriter after delay
+        setTimeout(typeWriter, 2500);
+
+        // Scroll Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll(
+                '.section-title, .about-text, .about-image, .enterprise-card, .quote, .contact-form'
+            );
+            
+            animatedElements.forEach((el, index) => {
+                if (el.classList.contains('enterprise-card')) {
+                    setTimeout(() => {
+                        observer.observe(el);
+                    }, index * 100);
+                } else {
+                    observer.observe(el);
+                }
+            });
+        });
+
+        // Scroll to section function
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // Form submission
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const button = event.target.querySelector('.cta-button');
+            const originalText = button.textContent;
+            
+            // Button animation
+            button.style.transform = 'scale(0.95)';
+            button.textContent = 'Sending...';
+            
+            setTimeout(() => {
+                button.style.transform = 'scale(1)';
+                button.textContent = 'Message Sent';
+                button.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+                
+                setTimeout(() => {
+                    alert('Message received. You will be contacted through secure channels within 24 hours.');
+                    event.target.reset();
+                    button.textContent = originalText;
+                    button.style.background = 'linear-gradient(135deg, var(--deep-gold), #d4b76a)';
+                }, 1000);
+            }, 1000);
+        }
+
+        // Parallax effect for quotes section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const quotesSection = document.querySelector('.quotes');
+            if (quotesSection) {
+                const rate = scrolled * -0.5;
+                quotesSection.style.transform = `translateY(${rate}px)`;
+            }
+        });
+
+        // Add smooth reveal animation for enterprise cards
+        const enterpriseCards = document.querySelectorAll('.enterprise-card');
+        enterpriseCards.forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.2}s`;
+        });
+
+        // Enhanced hover effects
+        enterpriseCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Loading screen fade out
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>
